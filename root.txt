@@ -1,0 +1,159 @@
+//s5
+//priorityQ.h
+#include <stdio.h>
+
+#define MAXSIZE 100 typedef struct
+{
+int data[MAXSIZE]; int front, rear;
+} QUEUE;
+void initqueue(QUEUE *pq)
+{
+pq->front = pq->rear = -1;
+}
+void addq(QUEUE *pq, int num)
+{
+int i;
+for(i=pq->rear; i>pq->front; i--) //loop for comparison
+if(num>pq->data[i])
+pq->data[i+1]=pq->data[i]; //shift element
+else
+break;
+pq->data[i+1]=num;
+pq->rear++;
+}
+int removeq(QUEUE *pq)
+{
+int num;
+pq->front++;
+num = pq->data[pq->front];
+return (num);
+}
+int isempty(QUEUE *pq)
+{
+return (pq->front == pq->rear);
+}
+int isfull(QUEUE *pq)
+{
+return (pq->rear == MAXSIZE - 1);
+}
+void display(QUEUE *pq)
+{
+int i;
+printf("The Queue is: ");
+if (pq->front == pq->rear)
+{
+printf("\nQueue is Empty");
+}
+else
+{
+for (i = pq->front + 1; i <= pq->rear; i++)
+printf("\n%d", pq->data[i]);
+printf("\n");
+}
+}
+
+
+//PriorityQ.c
+#include<stdio.h>
+#include "priorityQ.h"
+void main()
+{
+int n,choice;
+QUEUE q;
+initqueue(&q);
+printf("---Priority queue---\n Elements are added according to
+descending order ");
+do
+{
+printf("\n1:ADD\n2:REMOVE\n3:DISPLAY\n4:EXIT");
+printf("\nEnter Your Choice: ");
+scanf("%d",&choice);
+switch(choice)
+{
+case 1:if(isfull(&q))
+printf("\nQueue is Overflow");
+else
+{
+printf("\nEnter the number to be added: ");
+scanf("%d",&n);
+addq(&q,n);
+display(&q);
+}
+break;
+case 2:if(isempty(&q))
+printf("\nQueue is Underflow");
+else
+printf("The removed element is %d ",removeq(&q));
+break;
+case 3:display(&q);
+break;
+}
+}
+while(choice!=4);
+}
+
+
+
+//cc filename.h
+//cc filename.c
+//  ./a.out
+
+//OUTPUT:
+//---Priority queue---
+//Elements are added according to descending order
+//1:ADD
+//2:REMOVE
+//3:DISPLAY
+//4:EXIT
+//Enter Your Choice: 1
+//Enter the number to be added: 2
+//The Queue is:
+//2
+//1:ADD
+//2:REMOVE
+//3:DISPLAY
+//4:EXIT
+//Enter Your Choice: 1
+//Enter the number to be added: 56
+//The Queue is:
+//56
+//2
+//1:ADD
+//2:REMOVE
+//3:DISPLAY
+//4:EXIT
+//Enter Your Choice: 1
+//Enter the number to be added: 15
+//The Queue is:
+//56
+//15
+//2
+//1:ADD
+//2:REMOVE
+//3:DISPLAY
+//4:EXIT
+//Enter Your Choice: 1
+//Enter the number to be added: 26
+//The Queue is:
+//56
+//26
+//15
+//2
+//1:ADD
+//2:REMOVE
+//3:DISPLAY
+//4:EXIT
+//Enter Your Choice: 1
+//Enter the number to be added: 80
+//The Queue is:
+//80
+//56
+//26
+//15
+//2
+//1:ADD
+//2:REMOVE
+//3:DISPLAY
+//4:EXIT
+//Enter Your Choice: 2
+//The removed element is 80
